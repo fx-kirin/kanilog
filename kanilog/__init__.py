@@ -1,12 +1,12 @@
 """kanilog - """
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = 'fx-kirin <fx.kirin@gmail.com>'
 __all__ = []
 
-
 import logging
 import sys
+
 import logzero
 
 DEFAULT_DATE_FORMAT = '%(color)s[%(levelname)1.1s|%(process)s|%(asctime)s %(name)s:%(threadName)s:%(module)s:%(lineno)d]%(end_color)s %(message)s'
@@ -21,20 +21,27 @@ def setup_logger(*args, **kwargs):
         file_log_level = kwargs['file_log_level']
     else:
         file_log_level = logging.DEBUG
+    if 'stdout_logging' in kwargs:
+        stdout_logging = kwargs['stdout_logging']
+        assert isinstance(stdout_logging, bool)
+    else:
+        stdout_logging = True
 
     root_log_level = file_log_level if file_log_level < level else level
     kwargs['level'] = root_log_level
 
     logzero.__name__ = ''
     root_logger = logzero.setup_logger('', disableStderrLogger=True, *args, **kwargs)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(level)
-    if 'formatter' in kwargs:
-        formatter = kwargs['formatter']
-    else:
-        formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
-    ch.setFormatter(formatter)
-    root_logger.addHandler(ch)
+
+    if stdout_logging:
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setLevel(level)
+        if 'formatter' in kwargs:
+            formatter = kwargs['formatter']
+        else:
+            formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
+        ch.setFormatter(formatter)
+        root_logger.addHandler(ch)
 
     stderr_logger = logging.getLogger('STDERR')
     stderr_logger.propagate = False
@@ -52,3 +59,8 @@ def setup_logger(*args, **kwargs):
 
 def get_stderr_logger():
     return logging.getLogger('STDERR')
+
+
+def log_anywhere(*args, **kwargs):
+    logger = logzero.setup_logger('log_anywhere', logfile='/tmp/log_anywhere.log', disableStderrLogger=True, level=logging.DEBUG)
+    logger.info(*args, **kwargs)
