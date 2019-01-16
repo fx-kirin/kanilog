@@ -1,6 +1,6 @@
 """kanilog - """
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __author__ = 'fx-kirin <fx.kirin@gmail.com>'
 __all__ = []
 
@@ -17,21 +17,29 @@ def setup_logger(*args, **kwargs):
         level = kwargs['level']
     else:
         level = logging.INFO
+
     if 'file_log_level' in kwargs:
         file_log_level = kwargs['file_log_level']
     else:
         file_log_level = logging.DEBUG
+
     if 'stdout_logging' in kwargs:
         stdout_logging = kwargs['stdout_logging']
         assert isinstance(stdout_logging, bool)
     else:
         stdout_logging = True
 
+    if 'name' in kwargs:
+        name = kwargs['name']
+        assert isinstance(stdout_logging, bool)
+    else:
+        logzero.__name__ = ''
+        name = ''
+
     root_log_level = file_log_level if file_log_level < level else level
     kwargs['level'] = root_log_level
 
-    logzero.__name__ = ''
-    root_logger = logzero.setup_logger('', disableStderrLogger=True, *args, **kwargs)
+    root_logger = logzero.setup_logger(name, disableStderrLogger=True, *args, **kwargs)
 
     if stdout_logging:
         ch = logging.StreamHandler(sys.stdout)
