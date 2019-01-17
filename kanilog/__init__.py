@@ -20,12 +20,14 @@ def setup_logger(*args, **kwargs):
 
     if 'file_log_level' in kwargs:
         file_log_level = kwargs['file_log_level']
+        del kwargs['file_log_level']
     else:
         file_log_level = logging.DEBUG
 
     if 'stdout_logging' in kwargs:
         stdout_logging = kwargs['stdout_logging']
         assert isinstance(stdout_logging, bool)
+        del kwargs['stdout_logging']
     else:
         stdout_logging = True
 
@@ -34,20 +36,22 @@ def setup_logger(*args, **kwargs):
         assert isinstance(stdout_logging, bool)
     else:
         logzero.__name__ = ''
-        name = ''
+        kwargs['name'] = ''
 
     root_log_level = file_log_level if file_log_level < level else level
     kwargs['level'] = root_log_level
 
-    root_logger = logzero.setup_logger(name, disableStderrLogger=True, *args, **kwargs)
+    if 'formatter' in kwargs:
+        formatter = kwargs['formatter']
+    else:
+        formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
+        kwargs['formatter'] = formatter
+
+    root_logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
 
     if stdout_logging:
         ch = logging.StreamHandler(sys.stdout)
         ch.setLevel(level)
-        if 'formatter' in kwargs:
-            formatter = kwargs['formatter']
-        else:
-            formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
         ch.setFormatter(formatter)
         root_logger.addHandler(ch)
 
