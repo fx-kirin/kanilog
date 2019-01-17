@@ -45,7 +45,9 @@ def setup_logger(*args, **kwargs):
         formatter = kwargs['formatter']
     else:
         formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
-        kwargs['formatter'] = formatter
+
+    kwargs['formatter'] = formatter
+    kwargs['formatter']._fmt = kwargs['formatter']._fmt.replace('%(color)s', '').replace('%(end_color)s', '')
 
     root_logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
 
