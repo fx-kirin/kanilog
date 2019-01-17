@@ -24,6 +24,12 @@ def setup_logger(*args, **kwargs):
     else:
         file_log_level = logging.DEBUG
 
+    if 'maxBytes' not in kwargs:
+        kwargs['maxBytes'] = 100000
+
+    if 'backupCount' not in kwargs:
+        kwargs['backupCount'] = 10
+
     if 'stdout_logging' in kwargs:
         stdout_logging = kwargs['stdout_logging']
         assert isinstance(stdout_logging, bool)
