@@ -33,8 +33,8 @@ def teardown_function(function):
 
 
 def test_func():
-    log = kanilog.setup_logger('logtest')
-    log.test()
+    kanilog.setup_logger()
+    logging.info('logtest')
     pass
 
 

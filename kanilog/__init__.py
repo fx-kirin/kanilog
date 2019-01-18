@@ -9,7 +9,7 @@ import sys
 
 import logzero
 
-DEFAULT_DATE_FORMAT = '%(color)s[%(levelname)1.1s|%(process)s|%(asctime)s %(name)s:%(threadName)s:%(module)s:%(lineno)d]%(end_color)s %(message)s'
+DEFAULT_DATE_FORMAT = '%(color)s[%(levelname)1.1s|%(process)s|%(asctime)s.%(msecs)03d %(name)s:%(threadName)s:%(module)s:%(lineno)d]%(end_color)s %(message)s'
 
 
 def setup_logger(*args, **kwargs):
@@ -55,13 +55,13 @@ def setup_logger(*args, **kwargs):
     kwargs['formatter'] = formatter
     kwargs['formatter']._fmt = kwargs['formatter']._fmt.replace('%(color)s', '').replace('%(end_color)s', '')
 
-    root_logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
+    logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
 
     if stdout_logging:
         ch = logging.StreamHandler(sys.stdout)
         ch.setLevel(level)
         ch.setFormatter(formatter)
-        root_logger.addHandler(ch)
+        logger.addHandler(ch)
 
     stderr_logger = logging.getLogger('STDERR')
     stderr_logger.propagate = False
@@ -71,10 +71,11 @@ def setup_logger(*args, **kwargs):
     stderr_handler.setFormatter(formatter)
     stderr_logger.addHandler(stderr_handler)
 
-    for handler in root_logger.handlers:
+    for handler in logger.handlers:
         if isinstance(handler, logging.FileHandler):
             handler.setLevel(file_log_level)
             stderr_logger.addHandler(handler)
+    return logger
 
 
 def get_stderr_logger():
