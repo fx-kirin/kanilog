@@ -1,6 +1,6 @@
 """kanilog - """
 
-__version__ = '0.1.2'
+__version__ = '0.1.5'
 __author__ = 'fx-kirin <fx.kirin@gmail.com>'
 __all__ = []
 
@@ -25,7 +25,7 @@ def setup_logger(*args, **kwargs):
         file_log_level = logging.DEBUG
 
     if 'maxBytes' not in kwargs:
-        kwargs['maxBytes'] = 100000
+        kwargs['maxBytes'] = 100000000
 
     if 'backupCount' not in kwargs:
         kwargs['backupCount'] = 10
