@@ -1,6 +1,6 @@
 """kanilog - """
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 __author__ = 'fx-kirin <fx.kirin@gmail.com>'
 __all__ = []
 
@@ -52,8 +52,8 @@ def setup_logger(*args, **kwargs):
     else:
         formatter = logzero.LogFormatter(fmt=DEFAULT_DATE_FORMAT)
 
-    kwargs['formatter'] = formatter
-    kwargs['formatter']._fmt = kwargs['formatter']._fmt.replace('%(color)s', '').replace('%(end_color)s', '')
+    kwargs['formatter'] = logzero.LogFormatter(fmt=formatter._fmt)
+    formatter._fmt = formatter._fmt.replace('%(color)s', '').replace('%(end_color)s', '')
 
     logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
 
