@@ -33,7 +33,6 @@ def teardown_function(function):
 
 
 def test_func():
-    kanilog.setup_logger()
     logging.info('logtest')
     pass
 
@@ -43,4 +42,5 @@ if __name__ == "__main__":
     kanilog.setup_logger(logfile='/tmp/%s.log' % (os.path.basename(__file__)), level=logging.INFO)
     stdlogging.enable()
 
-    pytest.main([__file__, '-k test_', '-s'])
+    #pytest.main([__file__, '-k test_', '-s'])
+    test_func()
