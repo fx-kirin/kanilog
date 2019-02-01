@@ -1,6 +1,6 @@
 """kanilog - """
 
-__version__ = '0.1.7'
+__version__ = '0.1.8'
 __author__ = 'fx-kirin <fx.kirin@gmail.com>'
 __all__ = []
 
