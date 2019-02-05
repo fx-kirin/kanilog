@@ -28,7 +28,7 @@ def setup_logger(*args, **kwargs):
         kwargs['maxBytes'] = 10000000
 
     if 'backupCount' not in kwargs:
-        kwargs['backupCount'] = 10
+        kwargs['backupCount'] = 30
 
     if 'stdout_logging' in kwargs:
         stdout_logging = kwargs['stdout_logging']
