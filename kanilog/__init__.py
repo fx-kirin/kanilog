@@ -6,6 +6,7 @@ __all__ = []
 
 import logging
 import sys
+from pathlib import Path
 
 import logzero
 
@@ -85,3 +86,12 @@ def get_stderr_logger():
 def log_anywhere(*args, **kwargs):
     logger = logzero.setup_logger('log_anywhere', logfile='/tmp/log_anywhere.log', disableStderrLogger=True, level=logging.DEBUG)
     logger.info(*args, **kwargs)
+
+
+def get_module_logger(file_path, parent_index):
+    module_path = Path(file_path)
+    if parent_index == 0:
+        logger_name = module_path.stem
+    else:
+        logger_name = str(module_path.parent.relative_to(module_path.parents[parent_index])).replace('/', '.') + '.' + module_path.stem
+    return logging.getLogger(logger_name)
