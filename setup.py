@@ -15,7 +15,7 @@ def read(filename):
 
 setup(
     name="kanilog",
-    version="0.3.0",
+    version="0.3.1",
     url="https://github.com/fx-kirin/kanilog",
     license='MIT',
 
@@ -23,7 +23,7 @@ setup(
     author_email="fx.kirin@gmail.com",
 
     description="",
-    long_description=read("README.rst"),
+    long_description="",
 
     packages=find_packages(exclude=('tests',)),
 

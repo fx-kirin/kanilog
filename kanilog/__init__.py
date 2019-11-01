@@ -63,6 +63,7 @@ def setup_logger(*args, **kwargs):
     kwargs['formatter'] = logzero.LogFormatter(fmt=formatter._fmt)
     kwargs['formatter']._fmt = formatter._fmt.replace('%(color)s', '').replace('%(end_color)s', '')
 
+    __import__('ipdb').set_trace()
     logger = logzero.setup_logger(disableStderrLogger=True, *args, **kwargs)
 
     if stdout_logging:

@@ -1,6 +1,0 @@
-add_parent_path
-logzero
-logzero.egg
-pytest
-setuptools
-stdlogging
