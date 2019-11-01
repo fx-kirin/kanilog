@@ -1,6 +1,6 @@
-setuptools==36.5.0.post20170921
-logzero.egg==info
-add_parent_path==0.1.7
-logzero==1.5.0
-pytest==4.3.1
-stdlogging==0.15
+add_parent_path
+logzero
+logzero.egg
+pytest
+setuptools
+stdlogging

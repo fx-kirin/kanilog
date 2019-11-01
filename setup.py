@@ -15,7 +15,7 @@ def read(filename):
 
 setup(
     name="kanilog",
-    version="0.2.0",
+    version="0.3.0",
     url="https://github.com/fx-kirin/kanilog",
     license='MIT',
 

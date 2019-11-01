@@ -38,6 +38,13 @@ def setup_logger(*args, **kwargs):
     else:
         stdout_logging = True
 
+    if 'stderr_logging' in kwargs:
+        stderr_logging = kwargs['stderr_logging']
+        assert isinstance(stderr_logging, bool)
+        del kwargs['stderr_logging']
+    else:
+        stderr_logging = True
+
     if 'name' in kwargs:
         name = kwargs['name']
         assert isinstance(stdout_logging, bool)
@@ -64,18 +71,19 @@ def setup_logger(*args, **kwargs):
         ch.setFormatter(formatter)
         logger.addHandler(ch)
 
-    stderr_logger = logging.getLogger('STDERR')
-    stderr_logger.propagate = False
+    if stderr_logging:
+        stderr_logger = logging.getLogger('STDERR')
+        stderr_logger.propagate = False
 
-    stderr_handler = logging.StreamHandler(sys.stderr)
-    stderr_handler.setLevel(level)
-    stderr_handler.setFormatter(formatter)
-    stderr_logger.addHandler(stderr_handler)
+        stderr_handler = logging.StreamHandler(sys.stderr)
+        stderr_handler.setLevel(level)
+        stderr_handler.setFormatter(formatter)
+        stderr_logger.addHandler(stderr_handler)
 
-    for handler in logger.handlers:
-        if isinstance(handler, logging.FileHandler):
-            handler.setLevel(file_log_level)
-            stderr_logger.addHandler(handler)
+        for handler in logger.handlers:
+            if isinstance(handler, logging.FileHandler):
+                handler.setLevel(file_log_level)
+                stderr_logger.addHandler(handler)
     return logger
 
 
