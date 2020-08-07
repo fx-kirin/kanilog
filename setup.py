@@ -15,7 +15,7 @@ def read(filename):
 
 setup(
     name="kanilog",
-    version="0.3.1",
+    version="0.3.3",
     url="https://github.com/fx-kirin/kanilog",
     license='MIT',
 
@@ -27,7 +27,7 @@ setup(
 
     packages=find_packages(exclude=('tests',)),
 
-    install_requires=[],
+    install_requires=["logzero"],
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
